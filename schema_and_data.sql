@@ -26,6 +26,7 @@ CREATE TABLE Artist_Genre (
     FOREIGN KEY (artist_id) REFERENCES Artist(ID) ON DELETE CASCADE,
     FOREIGN KEY (genre_id) REFERENCES Genre(ID) ON DELETE CASCADE
 );
+
 INSERT INTO Artist_Genre (artist_id, genre_id) VALUES
 (1, 1),  
 (2, 1),  
@@ -37,6 +38,7 @@ CREATE TABLE Album (
     title VARCHAR(255) NOT NULL,
     year INT NOT NULL
 );
+
 INSERT INTO Album (title, year) VALUES
 ('A Night at the Opera', 1975),
 ('Abbey Road', 1969),
@@ -54,22 +56,25 @@ CREATE TABLE Song (
     ID SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     year INT NOT NULL,
+    duration TIME NOT NULL,
     album_id INT NOT NULL,
     FOREIGN KEY (album_id) REFERENCES Album(ID) ON DELETE CASCADE
 );
-INSERT INTO Song (name, year, album_id) VALUES
-('Bohemian Rhapsody', 1975, 1), -- Queen
-('Love of My Life', 1975, 1), -- Queen
-('Come Together', 1969, 2), -- The Beatles
-('Something', 1969, 2), -- The Beatles
-('So What', 1959, 3), -- Miles Davis
-('Freddie Freeloader', 1959, 3); -- Miles Davis
+
+INSERT INTO Song (name, year, duration, album_id) VALUES
+('Bohemian Rhapsody', 1975, '00:05:55', 1), 
+('Love of My Life', 1975, '00:03:30', 1), 
+('Come Together', 1969, '00:04:19', 2), 
+('Something', 1969, '00:03:02', 2), 
+('So What', 1959, '00:09:22', 3), 
+('Freddie Freeloader', 1959, '00:09:34', 3);
 
 CREATE TABLE Sbomnik (
     ID SERIAL PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
     year INT NOT NULL
 );
+
 INSERT INTO Sbomnik (title, year) VALUES
 ('Rock Classics', 2000),
 ('Greatest Hits', 1995),
@@ -83,6 +88,7 @@ CREATE TABLE Sbomnik_Song (
     FOREIGN KEY (sbomnik_id) REFERENCES Sbomnik(ID) ON DELETE CASCADE,
     FOREIGN KEY (song_id) REFERENCES Song(ID) ON DELETE CASCADE
 );
+
 INSERT INTO Sbomnik_Song (sbomnik_id, song_id) VALUES
 (1, 1),  -- Rock Classics → Bohemian Rhapsody
 (1, 3),  -- Rock Classics → Come Together
